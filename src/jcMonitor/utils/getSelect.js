@@ -16,5 +16,15 @@ function getSelect(path) {
 export default function (path) {
     if (Array.isArray(path)) {
         return getSelect(path)
+    }else{
+        // 也有可能是对象
+        let patharr=[]
+        while(path)
+        {
+            patharr.push(path)
+            path=path.parentNode
+        }
+
+        return getSelect(patharr)
     }
 }

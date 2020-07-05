@@ -6,7 +6,7 @@ let userAgent = require('user-agent')
 function getExtraData() {
     return {
         title: document.title,
-        url: location.url,
+        url: location.href,
         timestamp: Date.now(),
         userAgent: userAgent.parse(navigator.userAgent).name
     }
@@ -30,16 +30,18 @@ class Tracker {
             }
         }
         console.log('tarcklog', log)
-        let body = JSON.stringify(log)
+        let body = JSON.stringify({
+            __logs__:[log]
+        })
         this.xhr.open('POST', this.url, true)
         this.xhr.setRequestHeader('Content-Type', 'application/json')
         this.xhr.setRequestHeader('x-log-apiversion', '0.6.0')
         this.xhr.setRequestHeader('x-log-bodyrawsize', body.length)
         this.xhr.onload = function () {
-            console.log(this.xhr.response)
+         //   console.log(this.xhr.response)
         }
         this.xhr.onerror = function (error) {
-            console.log(error)
+           // console.log(error)
         }
         this.xhr.send(body)
     }

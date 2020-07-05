@@ -9,7 +9,17 @@ module.exports = {
         filename: 'jcmonitor.js'
     },
     devServer: {
-        contentBase: path.resolve(__dirname, 'dist')
+        contentBase: path.resolve(__dirname, 'dist'),
+        // before  express 服务器
+        before(router) {
+            router.get('/success', (req, res) => {
+                res.json({id:1});//200
+            });
+            
+            router.post('/error', (req, res) => {
+                res.sendStatus(500);//200
+            });
+        }, 
     },
     plugins: [
         new HtmlWebpackPlugin({
